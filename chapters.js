@@ -1,0 +1,15 @@
+export const chaptersList = [
+  { id: "00_introducao.md", title: "Introdução" },
+  { id: "01_coercao_de_tipos.md", title: "Coerção de Tipos" },
+  { id: "02_igualdade.md", title: "Igualdade (== vs ===)" },
+  { id: "03_ordem_operadores.md", title: "Ordem dos Operadores" },
+  { id: "04_truthy_falsy.md", title: "Truthy e Falsy" },
+  { id: "05_nan.md", title: "Not-A-Number (NaN)" },
+  { id: "06_ieee754.md", title: "A Falha do IEEE 754" },
+  { id: "07_arrays.md", title: "Arrays e Armadilhas" },
+  { id: "08_objetos.md", title: "Objetos e Referências" },
+  { id: "09_hoisting.md", title: "Hoisting e TDZ" },
+  { id: "10_arrow_functions.md", title: "Arrow Functions" },
+  { id: "11_quiz.md", title: "Quiz Inicial" },
+  { id: "12_conclusao.md", title: "Conclusão" },
+];
