@@ -10,6 +10,7 @@ export const chaptersList = [
   { id: "08_objetos.md", title: "Objetos e Referências" },
   { id: "09_hoisting.md", title: "Hoisting e TDZ" },
   { id: "10_arrow_functions.md", title: "Arrow Functions" },
-  { id: "11_quiz.md", title: "Quiz Inicial" },
-  { id: "12_conclusao.md", title: "Conclusão" },
+  { id: "11_classes_poo.md", title: "Classes e POO" },
+  { id: "12_quiz.md", title: "Quiz Inicial" },
+  { id: "13_conclusao.md", title: "Conclusão" },
 ];
