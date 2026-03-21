@@ -3,7 +3,11 @@ import { render } from "preact";
 import { useState, useEffect, useRef } from "preact/hooks";
 import { chaptersList } from "./chapters.js";
 
+const APP_TITLE = "As Pegadinhas do JS";
+const APP_SUBTITLE = "O guia definitivo de sobrevivência";
+
 function App() {
+  const [chapters, setChapters] = useState(chaptersList);
   const [activeChapter, setActiveChapter] = useState(chaptersList[0]);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -11,6 +15,29 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const contentRef = useRef(null);
+
+  // Calcula tempo de leitura dinamicamente para todos os capítulos
+  useEffect(() => {
+    const updateReadingTimes = async () => {
+      const updatedChapters = await Promise.all(
+        chaptersList.map(async (chapter) => {
+          try {
+            const response = await fetch(`./markdown/${chapter.id}`);
+            const text = await response.text();
+            // Estimativa: ~200 palavras por minuto
+            const words = text.split(/\s+/).length;
+            const minutes = Math.ceil(words / 200);
+            return { ...chapter, readingTime: `${minutes} min` };
+          } catch (e) {
+            return { ...chapter, readingTime: "---" };
+          }
+        })
+      );
+      setChapters(updatedChapters);
+    };
+
+    updateReadingTimes();
+  }, []);
 
   useEffect(() => {
     loadChapter(activeChapter.id);
@@ -65,12 +92,12 @@ function App() {
     </button>
     <div class="sidebar ${isMenuOpen ? "open" : ""}">
       <div class="sidebar-header">
-        <div class="sidebar-title">As Pegadinhas do JS</div>
-        <div class="sidebar-subtitle">O guia definitivo de sobrevivência</div>
+        <div class="sidebar-title">${APP_TITLE}</div>
+        <div class="sidebar-subtitle">${APP_SUBTITLE}</div>
       </div>
 
       <ul class="chapter-list">
-        ${chaptersList.map(
+        ${chapters.map(
           (chapter) => html`
             <li
               key=${chapter.id}
@@ -82,7 +109,11 @@ function App() {
                 setIsMenuOpen(false);
               }}
             >
-              ${chapter.title}
+              <div class="chapter-info">
+                <span class="chapter-name">${chapter.title}</span>
+                ${chapter.readingTime &&
+                html`<span class="reading-time">${chapter.readingTime}</span>`}
+              </div>
             </li>
           `,
         )}

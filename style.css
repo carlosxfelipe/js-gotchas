@@ -97,8 +97,6 @@ body {
 .chapter-item {
   padding: 12px 24px;
   cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
   transition: all 0.2s ease;
   border-left: 3px solid transparent;
 }
@@ -110,9 +108,35 @@ body {
 
 .chapter-item.active {
   background-color: var(--accent-glow);
-  color: var(--accent);
   border-left-color: var(--accent);
-  font-weight: 500;
+}
+
+.chapter-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chapter-name {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.chapter-item:hover .chapter-name,
+.chapter-item.active .chapter-name {
+  color: var(--text-primary);
+}
+
+.chapter-item.active .chapter-name {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.reading-time {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
 }
 
 .content-area {
