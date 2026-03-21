@@ -1,6 +1,6 @@
 # Capítulo 11 — Classes, POO e o Construtor Traidor
 
-O JavaScript (e o TypeScript) trouxe as `class` para facilitar a vida de quem gosta de Programação Orientada a Objetos. No entanto, o sistema de classes no JavaScript é apenas uma "camada de açúcar" sobre o motor de protótipos da linguagem, o que gera comportamentos inesperados em relação a outras linguagens como Java ou C#.
+O JavaScript (e o TypeScript) trouxeram as `class` para facilitar a vida de quem gosta de Programação Orientada a Objetos. No entanto, o sistema de classes no JavaScript é apenas uma "camada de açúcar" sobre o motor de protótipos da linguagem, o que gera comportamentos inesperados em relação a outras linguagens como Java ou C#.
 
 ### 1. Privado de "Mentira" vs Privado de "Verdade"
 
@@ -11,7 +11,7 @@ A pegadinha é que qualquer um pode ler ou alterar essa propriedade de fora, que
 ```javascript
 class Usuario {
   _apelido = "Carlos"; // Privado de mentira (qualquer um acessa)
-  #id = 123;           // Privado de verdade (o motor bloqueia o acesso externo)
+  #id = 123; // Privado de verdade (o motor bloqueia o acesso externo)
 
   mostrarId() {
     console.log(this.#id); // Funciona aqui dentro
@@ -20,10 +20,10 @@ class Usuario {
 
 const u = new Usuario();
 console.log(u._apelido); // "Carlos" (Acessível!)
-console.log(u.#id);      // SyntaxError: Private field '#id' must be declared in an enclosing class
+console.log(u.#id); // SyntaxError: Private field '#id' must be declared in an enclosing class
 ```
 
-### 2. O Esquecimento do `super()`
+### 2. O Esquecimento do super()
 
 Se você criar uma classe que herda de outra (`extends`), o JavaScript impõe uma regra rígida: a classe pai deve ser "construída" antes que a classe filha possa sequer tocar no próprio contexto (`this`).
 
@@ -39,7 +39,7 @@ class Usuario {
 class Administrador extends Usuario {
   constructor(nome, permissao) {
     this.permissao = permissao; // Erro! O motor ainda não sabe quem é o 'this'
-    super(nome);                // O super() deve vir SEMPRE antes do uso do this
+    super(nome); // O super() deve vir SEMPRE antes do uso do this
   }
 }
 ```
@@ -61,12 +61,12 @@ class Usuario {
 
 const u = new Usuario("carlos");
 console.log(Usuario.formatar(u)); // "CARLOS" (Caminho correto)
-console.log(u.formatar());        // TypeError: u.formatar is not a function (A pegadinha!)
+console.log(u.formatar()); // TypeError: u.formatar is not a function (A pegadinha!)
 ```
 
 ### 4. O Exemplo do "Bypass" no Construtor
 
-Por fim, existe um erro de arquitetura muito comum onde suas regras de validação são completamente ignoradas no momento do nascimento do objeto. Isso acontece quando o construtor acessa propriedades internas diretamente em vez de passar pelos seus próprios métodos de validação (Getters/Setters).
+Por fim, existe um erro de arquitetura muito comum onde suas regras de validação são completamente ignoradas no momento do nascimento do objeto. Isso acontece quando o construtor acessa propriedades internas diretamente em vez de passar pelos seus próprios métodos de validação (Getters e Setters).
 
 Imagine uma classe `Usuario` com regras estritas: o nome não pode ser vazio e a idade não pode ser negativa:
 
@@ -92,13 +92,13 @@ class Usuario {
 const u = new Usuario("", -10); // Funciona e ignora os erros!
 ```
 
-A pegadinha aqui é que ao usar atalhos de construtor ou atribuir valores diretamente para a variável interna (`_nome = valor`), você pula o Setter. A forma correta é obrigar o construtor a passar pela validação:
+A pegadinha aqui é que ao usar atalhos de construtor ou atribuir valores diretamente para a variável interna (`this._nome = valor`), você pula o Setter. A forma correta é obrigar o construtor a passar pela validação:
 
 ```javascript
 class Usuario {
   constructor(nome, idade) {
-    // FORMA CORRETA: Atribui para a propriedade limpa, disparando o setter
-    this.nome = nome; 
+    // FORMA CORRETA: Atribui para a propriedade limpa, disparando o Setter
+    this.nome = nome;
     this.idade = idade;
   }
 

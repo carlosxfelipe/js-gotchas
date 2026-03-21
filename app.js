@@ -120,8 +120,9 @@ function App() {
                       class="nav-btn prev"
                       onClick=${() => setActiveChapter(prevChapter)}
                     >
-                      <span class="nav-mobile">← Anterior</span>
-                      <span class="nav-desktop">← ${prevChapter.title}</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="m15 18-6-6 6-6"/></svg>
+                      <span class="nav-mobile">Anterior</span>
+                      <span class="nav-desktop">${prevChapter.title}</span>
                     </button>`
                   : html`<div></div>`}
                 ${nextChapter
@@ -129,8 +130,9 @@ function App() {
                       class="nav-btn next"
                       onClick=${() => setActiveChapter(nextChapter)}
                     >
-                      <span class="nav-desktop">${nextChapter.title} →</span>
-                      <span class="nav-mobile">Próxima →</span>
+                      <span class="nav-desktop">${nextChapter.title}</span>
+                      <span class="nav-mobile">Próxima</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;"><path d="m9 18 6-6-6-6"/></svg>
                     </button>`
                   : html`<div></div>`}
               </div>
